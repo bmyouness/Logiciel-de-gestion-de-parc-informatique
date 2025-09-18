@@ -1,0 +1,46 @@
+CREATE TABLE Client(
+   IdClient INT IDENTITY,
+   Siret VARCHAR(50),
+   NomEntreprise VARCHAR(50),
+   FormeJuridique VARCHAR(50),
+   PRIMARY KEY(IdClient)
+);
+
+CREATE TABLE Type_Materiel(
+   IdTypeMateriel INT IDENTITY,
+   NomMateriel VARCHAR(50),
+   PRIMARY KEY(IdTypeMateriel)
+);
+
+CREATE TABLE Matériel(
+   IdMateriel INT IDENTITY,
+   NomMachine VARCHAR(50),
+   AdresseIP VARCHAR(50),
+   Description VARCHAR(50),
+   DateMiseEnService DATETIME2,
+   IdTypeMateriel INT NOT NULL,
+   IdClient INT NOT NULL,
+   PRIMARY KEY(IdMateriel),
+   FOREIGN KEY(IdTypeMateriel) REFERENCES Type_Materiel(IdTypeMateriel),
+   FOREIGN KEY(IdClient) REFERENCES Client(IdClient)
+);
+
+CREATE TABLE UtilisateurAD(
+   IdUtilisateurAD INT IDENTITY,
+   IdentifiantAD VARCHAR(50),
+   NomAffiche VARCHAR(50),
+   Email VARCHAR(50),
+   IdClient INT NOT NULL,
+   PRIMARY KEY(IdUtilisateurAD),
+   FOREIGN KEY(IdClient) REFERENCES Client(IdClient)
+);
+
+CREATE TABLE Licence_Logiciel(
+   IdLicence INT IDENTITY,
+   NomProduit VARCHAR(50),
+   CleProduit VARCHAR(50),
+   DateExpiration DATETIME2,
+   IdClient INT NOT NULL,
+   PRIMARY KEY(IdLicence),
+   FOREIGN KEY(IdClient) REFERENCES Client(IdClient)
+);
